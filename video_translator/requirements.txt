@@ -1,8 +1,8 @@
+tensorflow==2.19.0
+keras==3.5.0
+transformers
 streamlit
 google-cloud-speech
 googletrans==4.0.0-rc1
-transformers
 ffmpeg-python
 pandas
-tensorflow
-torch
