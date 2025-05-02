@@ -1,0 +1,112 @@
+/* General body styles */
+body {
+    background-color: #FFFFFF;  /* White background */
+    color: #333333;  /* Darker text color for contrast */
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Sidebar styling */
+.sidebar .sidebar-content {
+    background-color: #003B5C;  /* PlayStation blue */
+    color: white;
+    border-radius: 0 10px 10px 0;  /* Rounded corners */
+    box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .sidebar-content a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sidebar .sidebar-content a:hover {
+    color: #005384;  /* Darker blue on hover */
+    text-decoration: underline;
+}
+
+/* Button styles */
+button {
+    background-color: #003B5C;  /* PlayStation blue */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #005384;  /* Darker blue */
+    transform: scale(1.05);  /* Slight zoom effect */
+}
+
+/* Customizing the selectbox */
+.stSelectbox select {
+    background-color: #003B5C;
+    color: white;
+    border: 1px solid #003B5C;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stSelectbox select:focus {
+    border-color: #005384;  /* Focused selectbox */
+    outline: none;
+}
+
+/* Header styles */
+h1 {
+    color: #003B5C;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+h2, h3 {
+    color: #003B5C;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Adjust video container */
+.stVideo {
+    border: 5px solid #003B5C;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+    display: block;
+}
+
+/* Add some spacing and clean up the overall layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Improve the layout for smaller devices */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    button {
+        padding: 10px 20px;
+    }
+
+    .stSelectbox select {
+        padding: 8px;
+    }
+}
