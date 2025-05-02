@@ -5,8 +5,8 @@ import helpers  # Import the helper functions you created in helpers.py
 import os
 import tempfile
 
-# Add custom CSS to the app
-with open("styles.css") as f:  # Make sure styles.css is in the same folder
+# Make sure to update the path based on where the 'styles.css' is located
+with open("video_translator/styles.css") as f:  # Updated path
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 def main():
