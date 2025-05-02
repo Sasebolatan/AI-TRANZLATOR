@@ -4,6 +4,7 @@ import streamlit as st
 import helpers  # Import the helper functions you created in helpers.py
 import os
 import tempfile
+import torch
 
 # Make sure to update the path based on where the 'styles.css' is located
 with open("video_translator/styles.css") as f:  # Updated path

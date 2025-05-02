@@ -7,3 +7,4 @@ google-cloud-speech
 googletrans==4.0.0-rc1
 ffmpeg-python
 pandas
+torch
