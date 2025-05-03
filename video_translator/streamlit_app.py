@@ -9,8 +9,7 @@ import ffmpeg
 
 
 
-# Add custom CSS for styling
-with open("styles.css") as f:  # Correct path to styles.css
+with open("styles/styles.css") as f:  # Correct path to styles.css
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 def main():
