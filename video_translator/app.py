@@ -1,61 +1,41 @@
-import streamlit as st
-import tempfile  # Import tempfile to avoid the NameError
-import helpers  # Import the helper functions
+# app.py - Legacy or alternative script 
+# It demonstrates direct use of the audio processing and summarization tools without UI.
+
 import os
+import tempfile
+from helpers import extract_audio, transcribe_audio, translate_text, summarize_text
 
-# Add the custom CSS to the app
-with open("styles.css") as f:  # Open your CSS file
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+#  This is a simple CLI-style flow, likely for testing or development.
 
-def main():
-    # Sidebar navigation
-    st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to", ["Welcome", "Language Selection", "Upload Video"])
+def main(video_path, target_lang="es"):
+    print("Processing video...")
 
-    if page == "Welcome":
-        st.title("AI TRANZLATOR with video Summarization")
-        st.write("Welcome to the AI Video Translator. This app allows you to upload a video, transcribe it to text, translate it to another language, and generate a summary.")
-        
-        language = st.selectbox("Select your language", ["English", "Spanish", "French", "German", "Italian", "Japanese", "Korean"])
-        st.session_state.language = language
+    # Step 1: Extract audio from the video
+    audio_path = extract_audio(video_path)
+    if not audio_path:
+        print("❌ Audio extraction failed")
+        return
 
-    elif page == "Language Selection":
-        st.title("Select Target Language")
-        target_lang = st.selectbox("Select target language for translation", ["English", "Spanish", "French", "German", "Italian", "Japanese", "Korean"])
-        st.session_state.target_lang = target_lang
+    print("✅ Audio extracted. Transcribing...")
+    # Step 2: Transcribe audio to text
+    transcript = transcribe_audio(audio_path)
+    print(" Transcript:
+", transcript[:200])
 
-    elif page == "Upload Video":
-        st.title("Upload Video")
-        video_file = st.file_uploader("Upload a video", type=["mp4", "mov", "avi"])
+    # Step 3: Translate transcript
+    translated = translate_text(transcript, target_lang)
+    print(" Translated:
+", translated[:200])
 
-        if video_file:
-            with tempfile.NamedTemporaryFile(delete=False) as temp_video_file:  # Fix the tempfile issue
-                temp_video_file.write(video_file.read())
-                temp_video_file.close()
-
-            st.video(temp_video_file.name)  # Display video
-
-            st.write("Processing video...")  # You can add your actual video processing functions here
-
-            # Extract audio from the video file
-            audio_file = helpers.extract_audio(temp_video_file.name)
-
-            if audio_file:
-                # Transcribe audio to text
-                transcript = helpers.transcribe_audio(audio_file)
-
-                # Translate the transcript to the target language
-                translated_text = helpers.translate_text(transcript, st.session_state.target_lang)
-
-                # Summarize the translated text
-                summary = helpers.summarize_text(translated_text)
-
-                # Display the translated subtitles and summary
-                st.subheader("Translated Subtitles:")
-                st.write(translated_text)
-
-                st.subheader("AI-generated Summary:")
-                st.write(summary)
+    # Step 4: Summarize translated text
+    summary = summarize_text(translated)
+    print(" Summary:
+", summary)
 
 if __name__ == "__main__":
-    main()
+    # Example test call (for development)
+    test_video_path = "sample_video.mp4"  # Replace with your test file path
+    if os.path.exists(test_video_path):
+        main(test_video_path)
+    else:
+        print("⚠️ Please update 'test_video_path' to a real file to run this test.")
