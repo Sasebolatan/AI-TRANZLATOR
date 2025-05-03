@@ -10,8 +10,10 @@ import ffmpeg
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service_account_key.json"
 
 # ✅ Load your custom CSS
-with open("styles/styles.css") as f:
+with open("styles.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
 
 
 def main():
