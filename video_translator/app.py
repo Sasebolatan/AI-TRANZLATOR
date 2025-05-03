@@ -13,10 +13,10 @@ def main(video_path, target_lang="es"):
     # Step 1: Extract audio from the video
     audio_path = extract_audio(video_path)
     if not audio_path:
-        print("❌ Audio extraction failed")
+        print(" Audio extraction failed")
         return
 
-    print("✅ Audio extracted. Transcribing...")
+    print(" Audio extracted. Transcribing...")
     # Step 2: Transcribe audio to text
     transcript = transcribe_audio(audio_path)
     print(" Transcript:
@@ -38,4 +38,4 @@ if __name__ == "__main__":
     if os.path.exists(test_video_path):
         main(test_video_path)
     else:
-        print("⚠️ Please update 'test_video_path' to a real file to run this test.")
+        print(" Please update 'test_video_path' to a real file to run this test.")
