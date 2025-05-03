@@ -2,13 +2,19 @@ import ffmpeg
 from google.cloud import speech
 from googletrans import Translator
 from transformers import pipeline
+from google.oauth2 import service_account
 import tempfile
 import time
+import streamlit as st
 import logging
 
 logging.basicConfig(level=logging.INFO)
 
-# Initialize translation and summarization models
+# ✅ Load credentials from Streamlit secrets
+credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp"])
+client = speech.SpeechClient(credentials=credentials)
+
+# ✅ Initialize translation and summarization models
 translator = Translator()
 summarizer = pipeline("summarization")
 
@@ -28,7 +34,6 @@ def extract_audio(video_file):
 
 def transcribe_audio(audio_file):
     """ Transcribe the audio using Google Speech-to-Text """
-    client = speech.SpeechClient()
     with open(audio_file, 'rb') as audio_file:
         content = audio_file.read()
 
@@ -36,7 +41,7 @@ def transcribe_audio(audio_file):
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=16000,
-        language_code="en-US",  # Default transcription is in English
+        language_code="en-US",
     )
 
     response = client.recognize(config=config, audio=audio)
