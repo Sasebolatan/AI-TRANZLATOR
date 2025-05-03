@@ -5,12 +5,19 @@ import helpers  # Import the helper functions you created in helpers.py
 import os
 import tempfile
 import torch
+import ffmpeg
 
-# Make sure to update the path based on where the 'styles.css' is located
-with open("video_translator/styles.css") as f:  # Updated path
+
+
+# Add custom CSS for styling
+with open("styles.css") as f:  # Correct path to styles.css
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 def main():
+    # Initialize session state variables if not already initialized
+    if 'target_lang' not in st.session_state:
+        st.session_state.target_lang = "English"  # Default language or the language you want to initialize with
+
     # Sidebar navigation
     st.sidebar.title("Navigation")
     page = st.sidebar.radio("Go to", ["Welcome", "Language Selection", "Upload Video"])
@@ -19,14 +26,13 @@ def main():
         st.title("AI Video Translator with Summarization")
         st.write("Welcome to the AI Video Translator. This app allows you to upload a video, transcribe it to text, translate it to another language, and generate a summary.")
         
-        # Language selection
         language = st.selectbox("Select your language", ["English", "Spanish", "French", "German", "Italian", "Japanese", "Korean"])
         st.session_state.language = language
 
     elif page == "Language Selection":
         st.title("Select Target Language")
         target_lang = st.selectbox("Select target language for translation", ["English", "Spanish", "French", "German", "Italian", "Japanese", "Korean"])
-        st.session_state.target_lang = target_lang
+        st.session_state.target_lang = target_lang  # Update session state with the selected target language
 
     elif page == "Upload Video":
         st.title("Upload Video")
@@ -37,20 +43,15 @@ def main():
                 temp_video_file.write(video_file.read())
                 temp_video_file.close()
 
-            st.video(temp_video_file.name)  # Display video
+            st.video(temp_video_file.name)
 
             st.write("Processing video...")  # You can add your actual video processing functions here
-            st.write("Extracting audio from the video...")
+
+            # Example: Extract audio, transcribe, translate, and summarize
             audio_file = helpers.extract_audio(temp_video_file.name)
-
             if audio_file:
-                st.write("Transcribing audio to text...")
                 transcript = helpers.transcribe_audio(audio_file)
-
-                st.write(f"Translating to {st.session_state.target_lang}...")
-                translated_text = helpers.translate_text(transcript, st.session_state.target_lang)
-
-                st.write("Summarizing...")
+                translated_text = helpers.translate_text(transcript, st.session_state.target_lang)  # Using session_state for target_lang
                 summary = helpers.summarize_text(translated_text)
 
                 st.subheader("Translated Subtitles:")
